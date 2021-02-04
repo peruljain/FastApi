@@ -16,7 +16,7 @@ import urllib
 # ssl_mode = urllib.parse.quote_plus(str(os.environ.get('ssl_mode','prefer')))
 # DATABASE_URL = 'postgresql://{}:{}@{}:{}/{}?sslmode={}'.format(db_username, db_password, host_server, db_server_port, database_name, ssl_mode)
 # DATABASE_URL = "sqlite:///./test.db"
-DATABASE_URL = 'postgres://faaynfacrtmzff:06e41c204f1b5db2484014ef01a3ec98ac9ca6496b4e7f57c8e5adb048b32fc6@ec2-3-222-11-129.compute-1.amazonaws.com:5432/de76ev16a0qqm0'
+DATABASE_URL = 'postgres://faaynfacrtmzff:06e41c204f1b5db2484014ef01a3ec98ac9ca6496b4e7f57c8e5adb048b32fc6@ec2-3-222-11-129.compute-1.amazonaws.com:5432/de76ev16a0qqm0?sslmode=require'
 
 metadata = sqlalchemy.MetaData()
 
