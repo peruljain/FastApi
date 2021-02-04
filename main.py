@@ -59,6 +59,10 @@ async def startup():
 async def shutdown():
     await database.disconnect()
 
+@app.get("/")
+async def home():
+    return {"message" : "welcome perul jain"}
+
 @app.post("/notes/", response_model=Note, status_code = status.HTTP_201_CREATED)
 async def create_note(note: NoteIn):
     query = notes.insert().values(text=note.text, completed=note.completed)
