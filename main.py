@@ -8,14 +8,14 @@ import os
 import urllib
 
 
-host_server = os.environ.get('host_server', 'localhost')
-db_server_port = urllib.parse.quote_plus(str(os.environ.get('db_server_port', '5432')))
-database_name = os.environ.get('database_name', 'fastapi')
-db_username = urllib.parse.quote_plus(str(os.environ.get('db_username', 'postgres')))
-db_password = urllib.parse.quote_plus(str(os.environ.get('db_password', 'perulkajal09')))
-ssl_mode = urllib.parse.quote_plus(str(os.environ.get('ssl_mode','prefer')))
-DATABASE_URL = 'postgresql://{}:{}@{}:{}/{}?sslmode={}'.format(db_username, db_password, host_server, db_server_port, database_name, ssl_mode)
-
+# host_server = os.environ.get('host_server', 'localhost')
+# db_server_port = urllib.parse.quote_plus(str(os.environ.get('db_server_port', '5432')))
+# database_name = os.environ.get('database_name', 'fastapi')
+# db_username = urllib.parse.quote_plus(str(os.environ.get('db_username', 'postgres')))
+# db_password = urllib.parse.quote_plus(str(os.environ.get('db_password', 'perulkajal09')))
+# ssl_mode = urllib.parse.quote_plus(str(os.environ.get('ssl_mode','prefer')))
+# DATABASE_URL = 'postgresql://{}:{}@{}:{}/{}?sslmode={}'.format(db_username, db_password, host_server, db_server_port, database_name, ssl_mode)
+DATABASE_URL = "sqlite:///./test.db"
 # DATABASE_URL = 'postgres://faaynfacrtmzff:06e41c204f1b5db2484014ef01a3ec98ac9ca6496b4e7f57c8e5adb048b32fc6@ec2-3-222-11-129.compute-1.amazonaws.com:5432/de76ev16a0qqm0'
 
 metadata = sqlalchemy.MetaData()
@@ -29,9 +29,8 @@ notes = sqlalchemy.Table(
 )
 
 engine = sqlalchemy.create_engine(
-    DATABASE_URL, pool_size=3, max_overflow=0
+    DATABASE_URL, connect_args={"check_same_thread": False}
 )
-
 metadata.create_all(engine)
 
 class NoteIn(BaseModel):
@@ -53,6 +52,7 @@ app.add_middleware(
 )
 
 database = databases.Database(DATABASE_URL)
+
 
 @app.on_event("startup")
 async def startup():
